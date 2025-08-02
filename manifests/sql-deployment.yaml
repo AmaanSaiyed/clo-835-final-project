@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: fp
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      imagePullSecrets:
+        - name: ecr-secret         # 🔐 Required to pull from private ECR
+      containers:
+      - name: mysql
+        image: 223939953627.dkr.ecr.us-east-1.amazonaws.com/sql-repo:latest  # ✅ Your custom ECR image
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets     # ✅ Your secret name
+              key: DBPWD            # ✅ Your key (matches your secret.yaml)
+        - name: MYSQL_DATABASE
+          value: employees          # Optional but helps ensure your schema loads
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc      # ✅ Your existing PVC

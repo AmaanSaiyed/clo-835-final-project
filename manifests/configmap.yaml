@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: fp
+data:
+  IMAGE_URL: "s3://clo835-amaan/background.jpg"
+  APP_COLOR: "blue"
+  APP_HEADER_NAME: "Amaan Saiyed"
+  APP_HEADER_SLOGAN: "Done by Amaan!!!"
