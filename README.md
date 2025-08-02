@@ -75,15 +75,17 @@ aws ecr get-login-password --region <region> | docker login --username AWS --pas
 2. **Build and push Flask app image:**
 
 ```bash
-docker build -t <ECR_REGISTRY>/app-repo:latest .
-docker push <ECR_REGISTRY>/app-repo:latest
+docker build -t my_app -f Dockerfile .
+docker tag my_app <your_account_id>.dkr.ecr.<region>.amazonaws.com/app-repo:latest
+docker push <your_account_id>.dkr.ecr.<region>.amazonaws.com/app-repo:latest
 ```
 
 3. **Build and push MySQL image:**
 
 ```bash
-docker build -t <ECR_REGISTRY>/sql-repo:latest -f Dockerfile_mysql .
-docker push <ECR_REGISTRY>/sql-repo:latest
+docker build -t my_db -f Dockerfile_mysql .
+docker tag my_db <your_account_id>.dkr.ecr.<region>.amazonaws.com/sql-repo:latest
+docker push <your_account_id>.dkr.ecr.<region>.amazonaws.com/sql-repo:latest
 ```
 
 > Replace `<ECR_REGISTRY>` with your AWS ECR registry URL, for example:
