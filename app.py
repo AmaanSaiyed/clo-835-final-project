@@ -9,6 +9,7 @@ import re
 app = Flask(__name__)
 # Load IMAGE_URL from env
 IMAGE_URL = os.environ.get("IMAGE_URL")  # Format: s3://bucket/key.jpg
+print(f"[DEBUG] Loaded IMAGE_URL: {IMAGE_URL}")
 
 if IMAGE_URL:
     match = re.match(r"s3://([^/]+)/(.+)", IMAGE_URL)
@@ -25,7 +26,7 @@ if IMAGE_URL:
         )
 
         # Download the image to static folder
-        local_path = "static/background.png"
+        local_path = "static/background.jpg"
         try:
             os.makedirs("static", exist_ok=True)
             s3.download_file(bucket, key, local_path)
