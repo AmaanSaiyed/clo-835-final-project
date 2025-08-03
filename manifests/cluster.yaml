@@ -17,3 +17,5 @@ managedNodeGroups:
       enableSsm: true
     iam:
       instanceRoleARN: arn:aws:iam::223939953627:role/LabRole
+      
+#actiontest
